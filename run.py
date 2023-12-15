@@ -1,5 +1,4 @@
 from threading import Thread
-from gi.repository import Gtk, AppIndicator3, GObject
 import signal
 import gi
 import os
@@ -7,6 +6,7 @@ import subprocess
 import time
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
+from gi.repository import Gtk, AppIndicator3, GObject
 
 # change the working directory when script is run through command-line
 abspath = os.path.abspath(__file__)
