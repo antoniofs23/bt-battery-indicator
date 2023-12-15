@@ -12,7 +12,7 @@ gi.require_version('Notify', '0.7')
 from gi.repository import Gtk as gtk
 from gi.repository import AppIndicator3 as appindicator
 from gi.repository import Notify as notify
-
+from gi.repository import GObject
 
 APPINDICATOR_ID = 'myappindicator'
 
@@ -30,26 +30,25 @@ def main():
 
 
 def build_menu():
+    # get bash script output
     menu = gtk.Menu()
-
-    item_myapp = gtk.MenuItem('activate')
-    item_myapp.connect('activate', myapp)
-    menu.append(item_myapp)
-
+    model,battery=subprocess.getoutput("./pullpower.sh").split('\n')
+    
+    item_model=gtk.MenuItem(model)
+    item_battery=gtk.MenuItem(battery)
+    
     item_quit1 = gtk.MenuItem('quit')
     item_quit1.connect('activate', quit1)
+    
+    
+    # build menu
+    menu.append(item_model)
+    menu.append(item_battery)
     menu.append(item_quit1)
-
     menu.show_all()
     return menu
-
-
-def myapp(_):
-    subprocess.call("~/battery-indicator/pullpower.sh", shell=True)
-    return myapp
-
-
-# closes icon <doesnt close app | F10 closes app>
+    
+    
 def quit1(_):
     gtk.main_quit()
 

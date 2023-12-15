@@ -11,3 +11,6 @@ battery=$(echo "$battery" | awk '{for (i=1;i<=NF;i++) if (!battery[$i]++) printf
 
 # remove the pesky Diplay device %
 battery=${battery::-3}
+
+echo $devices
+echo $battery
