@@ -33,13 +33,15 @@ class Indicator():
     def create_menu(self):
         menu = Gtk.Menu()
 
-        dev, perc = subprocess.getoutput("./pullpower.sh").split('\n')
-        
+        device, percent = subprocess.getoutput("./pullpower.sh").split('\n')
+        # add space padding to deal with repeated devices being recognized
+        # as seperate devices because of middle vs no end spacing
+        device = " "+device+" "
         #split by device
-        dev = dev.split("model:")
+        dev = device.split("model:")
         dev.pop(0) # remove empty space
         #split by percent
-        perc = perc.split("percentage:")
+        perc = percent.split("percentage:")
         perc.pop(0); perc.pop() # remove display devices in my case..
         
         # acount for the fact that device sometimes show up twice ....
