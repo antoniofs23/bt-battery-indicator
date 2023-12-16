@@ -43,6 +43,8 @@ class Indicator():
         perc.pop(0); perc.pop() # remove display devices in my case..
         
         # acount for the fact that device sometimes show up twice ....
+        # still need to fix this for the case in which only one device is connected 
+        # found the issue there is trailing space 12/15/23
         keep = OrderedDict((device, dev.index(device)) for device in dev)
         keepIdx=list(keep.values()) 
         # define kept device models and battery percentage
@@ -73,7 +75,7 @@ class Indicator():
         Gtk.main_quit()
 
     def update_battery_status(self):
-        while True: # in the future update only when clicked
+        while True: # in the future update only when clicked 12/15/23
             time.sleep(300)  # updates every 5 minutes
             # apply interface update
             GObject.idle_add(
