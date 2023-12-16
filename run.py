@@ -73,7 +73,7 @@ class Indicator():
         Gtk.main_quit()
 
     def update_battery_status(self):
-        while True:
+        while True: # in the future update only when clicked
             time.sleep(300)  # updates every 5 minutes
             # apply interface update
             GObject.idle_add(
