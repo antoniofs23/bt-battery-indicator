@@ -1,4 +1,5 @@
 from threading import Thread
+from collections import OrderedDict
 import signal
 import gi
 import os
@@ -32,25 +33,39 @@ class Indicator():
     def create_menu(self):
         menu = Gtk.Menu()
 
-        model, battery = subprocess.getoutput("./pullpower.sh").split('\n')
-
-        # device + battery
-        item_model = Gtk.MenuItem(model)
-        item_battery = Gtk.MenuItem(battery)
-
-        # separator
+        dev, perc = subprocess.getoutput("./pullpower.sh").split('\n')
+        
+        #split by device
+        dev = dev.split("model:")
+        dev.pop(0) # remove empty space
+        #split by percent
+        perc = perc.split("percentage:")
+        perc.pop(0); perc.pop() # remove display devices in my case..
+        
+        # acount for the fact that device sometimes show up twice ....
+        keep = OrderedDict((device, dev.index(device)) for device in dev)
+        keepIdx=list(keep.values()) 
+        # define kept device models and battery percentage
+        model,battery=[],[]
+        for idx in keepIdx:
+            model.append(dev[idx])
+            battery.append(perc[idx])
+        
+        # add devices + battery%s 
+        for num in range(len(model)):
+            item_model = Gtk.MenuItem(model[num]+": "+battery[num])
+            menu.append(item_model)
+            
+            
+        # add a separator between devices and quit button
         menu_sep = Gtk.SeparatorMenuItem()
-
+        menu.append(menu_sep)
+        
         # quit button
         item_quit1 = Gtk.MenuItem('quit')
         item_quit1.connect('activate', self.stop)
 
-        # build menu
-        menu.append(item_model)
-        menu.append(item_battery)
-        menu.append(menu_sep)
         menu.append(item_quit1)
-
         menu.show_all()
         return menu
 
