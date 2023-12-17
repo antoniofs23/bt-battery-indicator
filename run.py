@@ -44,9 +44,6 @@ class Indicator():
         perc = percent.split("percentage:")
         perc.pop(0); perc.pop() # remove display devices in my case..
         
-        # acount for the fact that device sometimes show up twice ....
-        # still need to fix this for the case in which only one device is connected 
-        # found the issue there is trailing space 12/15/23
         keep = OrderedDict((device, dev.index(device)) for device in dev)
         keepIdx=list(keep.values()) 
         # define kept device models and battery percentage
