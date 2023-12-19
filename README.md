@@ -1,4 +1,4 @@
-# intro
+# Intro
 a simple linux panel app that outputs the battery percent of connected bluetooth devices. 
 
 # installation
@@ -6,12 +6,12 @@ clone this repo to your home directory via:
 
 `git clone https://github.com/antoniofs23/bt-battery-indicator.git`
 
-# dependencies
+### dependencies
 the app requires `upower` which should already be installed in your system.
 
 For python dependencies you can run the `pip install -r requirements.txt` command 
 
-# running the app
+### running the app
 
 To run via your terminal you can create an alias in your `.bashrc`:
 
@@ -19,7 +19,7 @@ To run via your terminal you can create an alias in your `.bashrc`:
 
 dont forget to `source .bashrc` after making the change
 
-## Running on startup
+### Running on startup
 To run the app automatically on startup do the following:
 1. create a `bt-battery-indicator.desktop` file in your `.config/autostart` directory
 2. Paste the following in `bt-battery-indicator.desktop` (make sure to replace path with your username)
