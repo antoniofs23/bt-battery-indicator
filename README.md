@@ -1,1 +1,1 @@
-# battery-indicator
+# bt-battery-indicator
