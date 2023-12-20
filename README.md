@@ -36,4 +36,4 @@ X-GNOME-Autostart-enabled=true
 Name[en_US]=bt-battery-indicator
 Comment[en_US]=runs bt-battery-indicator
 ```
-to make sure that it works you can then run `gio launch columnar.desktop` or just log-in and out
+to make sure that it works you can then run `gio launch bt-battery-indicator.desktop` or just log-in and out
