@@ -1,4 +1,4 @@
-
+# Quick Intro
 a simple linux panel app that outputs the battery percent of connected bluetooth devices. 
 
 ## Installation
