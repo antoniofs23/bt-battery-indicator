@@ -1,7 +1,7 @@
-# Intro
+
 a simple linux panel app that outputs the battery percent of connected bluetooth devices. 
 
-# installation
+## Installation
 clone this repo to your home directory via:
 
 `git clone https://github.com/antoniofs23/bt-battery-indicator.git`
