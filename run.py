@@ -5,6 +5,7 @@ import gi
 import os
 import subprocess
 import time
+
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
 from gi.repository import Gtk, AppIndicator3, GObject
@@ -23,12 +24,7 @@ class Indicator():
             self.app, iconpath, AppIndicator3.IndicatorCategory.OTHER)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(self.create_menu())
-        # self.indicator.set_label(" ", self.app)
-        # add thread
-        self.update = Thread(target=self.update_battery_status)
-        # daemonize thread to make indicator stopable
-        self.update.setDaemon(True)
-        self.update.start()
+
 
     def create_menu(self):
         menu = Gtk.Menu()
@@ -36,32 +32,35 @@ class Indicator():
         device, percent = subprocess.getoutput("./pullpower.sh").split('\n')
         # add space padding to deal with repeated devices being recognized
         # as seperate devices because of middle vs no end spacing
-        device = " "+device+" "
-        #split by device
+        device = " " + device + " "
+        # split by device
         dev = device.split("model:")
-        dev.pop(0) # remove empty space
-        #split by percent
+        dev.pop(0)  # remove empty space
+        # split by percent
         perc = percent.split("percentage:")
-        perc.pop(0); perc.pop() # remove display devices in my case..
-        
+        perc.pop(0);
+        perc.pop()  # remove display devices in my case..
+
         keep = OrderedDict((device, dev.index(device)) for device in dev)
-        keepIdx=list(keep.values()) 
+        keepIdx = list(keep.values())
         # define kept device models and battery percentage
-        model,battery=[],[]
+        model, battery = [], []
         for idx in keepIdx:
             model.append(dev[idx])
             battery.append(perc[idx])
-        
-        # add devices + battery%s 
+
+        # add devices + battery%s
         for num in range(len(model)):
-            item_model = Gtk.MenuItem(model[num]+": "+battery[num])
+            item_model = Gtk.MenuItem(model[num] + ": " + battery[num])
             menu.append(item_model)
-            
-            
+            # update on middle mouse button press (left click is not possible in gtk)
+            item_model.connect("activate", self.update_battery_status)
+            self.indicator.set_secondary_activate_target(item_model)
+
         # add a separator between devices and quit button
         menu_sep = Gtk.SeparatorMenuItem()
         menu.append(menu_sep)
-        
+
         # quit button
         item_quit1 = Gtk.MenuItem('quit')
         item_quit1.connect('activate', self.stop)
@@ -73,15 +72,13 @@ class Indicator():
     def stop(self, source):
         Gtk.main_quit()
 
-    def update_battery_status(self):
-        while True: # best practice would be to update on click but not sure how to do that
-            time.sleep(300)  # updates every 5 minutes
-            # apply interface update
-            GObject.idle_add(
-                self.indicator.set_menu,
-                self.create_menu(),
-                priority=GObject.PRIORITY_DEFAULT
-            )
+    def update_battery_status(self, widget):
+        GObject.idle_add(
+            self.indicator.set_menu,
+            self.create_menu(),
+            priority=GObject.PRIORITY_DEFAULT
+        )
+        print("battery status updated")
 
 
 Indicator()
