@@ -24,7 +24,12 @@ class Indicator():
             self.app, iconpath, AppIndicator3.IndicatorCategory.OTHER)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(self.create_menu())
-
+        # add thread
+        self.update = Thread(target=self.update_battery_status)
+        # dameonize
+        self.update.setDaemon(True)
+        self.update.start()
+        
 
     def create_menu(self):
         menu = Gtk.Menu()
@@ -48,14 +53,15 @@ class Indicator():
         for idx in keepIdx:
             model.append(dev[idx])
             battery.append(perc[idx])
+            
 
         # add devices + battery%s
         for num in range(len(model)):
             item_model = Gtk.MenuItem(model[num] + ": " + battery[num])
             menu.append(item_model)
-            # update on middle mouse button press (left click is not possible in gtk)
-            item_model.connect("activate", self.update_battery_status)
-            self.indicator.set_secondary_activate_target(item_model)
+        #    # update on middle mouse button press (left click is not possible in gtk)
+        #    item_model.connect("activate", self.update_battery_status)
+        #    self.indicator.set_secondary_activate_target(item_model)
 
         # add a separator between devices and quit button
         menu_sep = Gtk.SeparatorMenuItem()
@@ -72,13 +78,22 @@ class Indicator():
     def stop(self, source):
         Gtk.main_quit()
 
-    def update_battery_status(self, widget):
-        GObject.idle_add(
-            self.indicator.set_menu,
-            self.create_menu(),
-            priority=GObject.PRIORITY_DEFAULT
-        )
-        print("battery status updated")
+    def update_battery_status(self):
+        while True: 
+            time.sleep(300)  # updates every 5 minutes
+            # apply interface update
+            GObject.idle_add(
+                self.indicator.set_menu,
+                self.create_menu(),
+                priority=GObject.PRIORITY_DEFAULT
+            )
+    #def update_battery_status(self, widget):
+    #    GObject.idle_add(
+    #        self.indicator.set_menu,
+    #        self.create_menu(),
+    #        priority=GObject.PRIORITY_DEFAULT
+    #    )
+    #    print("battery status updated")
 
 
 Indicator()
