@@ -1,3 +1,4 @@
+[![Python application](https://github.com/antoniofs23/bt-battery-indicator/actions/workflows/python-app.yml/badge.svg)](https://github.com/antoniofs23/bt-battery-indicator/actions/workflows/python-app.yml)
 
 # Quick Intro
 a simple linux panel app that outputs the battery percent of connected bluetooth devices. 
