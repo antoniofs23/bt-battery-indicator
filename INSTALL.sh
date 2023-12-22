@@ -8,7 +8,8 @@
 echo "alias bt-battery='python3 ~/bt-battery-indicator/main.py &'" >> ~/.bashrc
 
 # 2. Install python dependencies
-pip install -r requirements.txt
+#pip install -r requirements.txt
+sudo apt install libgirepository1.0-dev
 
 # 3. set up as start-up process
 # get username 
