@@ -1,5 +1,6 @@
+<--
 ![example workflow](https://github.com/antoniofs23/bt-battery-indicator/actions/workflows/bt-battery-app.yml/badge.svg)
-
+-->
 # Quick Intro
 a simple linux panel app that outputs the battery percent of connected bluetooth devices. 
 
