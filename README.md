@@ -4,38 +4,10 @@ a simple linux panel app that outputs the battery percent of connected bluetooth
 ![Screenshot from 2023-12-19 19-13-28](https://github.com/antoniofs23/bt-battery-indicator/assets/39067846/f31aecfd-5c2d-4186-b6e6-3251ab985b10)
 
 ## Installation
-clone this repo to your home directory via:
-
-`git clone https://github.com/antoniofs23/bt-battery-indicator.git`
-
-### dependencies
-the app requires `upower` which should already be installed in your system.
-
-For python dependencies you can run the `pip install -r requirements.txt` command 
+1. clone this repo to your home directory via:
+    `git clone https://github.com/antoniofs23/bt-battery-indicator.git`
+2. In app directory run the `INSTALL.sh` file
 
 ### running the app
-
-To run via your terminal you can create an alias in your `.bashrc`:
-
-`alias bt-battery='python3 ~/bt-battery-indicator/run.py &'`
-
-dont forget to `source .bashrc` after making the change
-
-### Running on startup
-To run the app automatically on startup do the following:
-1. create a `bt-battery-indicator.desktop` file in your `.config/autostart` directory
-2. Paste the following in `bt-battery-indicator.desktop` (make sure to replace path with your username)
-```
-[Desktop Entry]
-Type=Application
-Path=/home/your_username/bt-battery-indicator/
-Exec=python3 run.py
-Terminal=false
-Icon=htop
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name[en_US]=bt-battery-indicator
-Comment[en_US]=runs bt-battery-indicator
-```
-to make sure that it works you can then run `gio launch bt-battery-indicator.desktop` or just log-in and out
+The app should auto-start on login.
+However, it can also be run through the `bt-battery` terminal command
