@@ -1,4 +1,4 @@
-![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/github/docs/actions/workflows/bt-battery-app.yml/badge.svg)
 # Quick Intro
 a simple linux panel app that outputs the battery percent of connected bluetooth devices. 
 
