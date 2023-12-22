@@ -1,1 +1,1 @@
-PyGObject==3.46.0
+libgirepository1.0-dev
