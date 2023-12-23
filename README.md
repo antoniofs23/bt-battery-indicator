@@ -6,7 +6,7 @@ a simple linux panel app that outputs the battery percent of connected bluetooth
 ![Screenshot from 2023-12-19 19-13-28](https://github.com/antoniofs23/bt-battery-indicator/assets/39067846/f31aecfd-5c2d-4186-b6e6-3251ab985b10)
 
 ## Installation
-*the install file assumes python is already installed* if not python 3.10 is required prior to running `INSTALL.sh`
+*the install file assumes python is already installed (which it normally is)* if not python3 is required prior to running `INSTALL.sh`. To quickly check if python is installed run `python -V` in your terminal
 
 1. clone this repo to your home directory via:
     `git clone https://github.com/antoniofs23/bt-battery-indicator.git`
