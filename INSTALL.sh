@@ -4,6 +4,7 @@
 # 2. installs python dependencies
 # 3. sets app as a start-up process
 
+# Start Install
 # 1. Create a terminal alias in .bashrc
 echo "alias bt-battery='python3 ~/bt-battery-indicator/main.py &'" >> ~/.bashrc
 
