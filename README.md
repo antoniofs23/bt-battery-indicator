@@ -18,5 +18,7 @@ The app should auto-start on login.
 However, it can also be run through the `bt-battery` terminal command
 
 >> `updated 12/28/23`
-    >> (+) `manual refresh` option if you dont want to wait 5min for app to refresh when you add a new device
-    >> (+) `add device` option that brings up the add bt device window in `gnome` settings
+>> 
+>> (+) `manual refresh` option if you dont want to wait 5min for app to refresh when you add a new device
+>> 
+>> (+) `add device` option that brings up the add bt device window in `gnome` settings
