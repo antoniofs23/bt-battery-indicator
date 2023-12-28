@@ -58,9 +58,6 @@ class Indicator:
         for num in range(len(model)):
             item_model = Gtk.MenuItem(model[num] + ": " + battery[num])
             menu.append(item_model)
-        #    # update on middle mouse button press (left click is not possible in gtk)
-        #    item_model.connect("activate", self.update_battery_status)
-        #    self.indicator.set_secondary_activate_target(item_model)
 
         # add a separator between devices and quit button
         menu_sep = Gtk.SeparatorMenuItem()
@@ -72,16 +69,13 @@ class Indicator:
         item_manual_refresh.connect("activate", self.manual_refresh)
         menu.append(item_manual_refresh)
 
-        # quit button
-        # item_quit1 = Gtk.MenuItem('quit')
-        # item_quit1.connect('activate', self.stop)
+        # add a way to add devides from drop-down
+        item_add_bt_device = Gtk.MenuItem("add device")
+        item_add_bt_device.connect("activate", self.add_device_window)
+        menu.append(item_add_bt_device)
 
-        # menu.append(item_quit1)
         menu.show_all()
         return menu
-
-        # def stop(self, source):
-        # Gtk.main_quit()
 
     def manual_refresh(self, source):
         GObject.idle_add(
@@ -100,13 +94,9 @@ class Indicator:
                 priority=GObject.PRIORITY_DEFAULT,
             )
 
-    # def update_battery_status(self, widget):
-    #    GObject.idle_add(
-    #        self.indicator.set_menu,
-    #        self.create_menu(),
-    #        priority=GObject.PRIORITY_DEFAULT
-    #    )
-    #    print("battery status updated")
+    def add_device_window(self, source):
+        # open up bluetooth devices settings
+        os.system("gnome-control-center bluetooth")
 
 
 Indicator()
