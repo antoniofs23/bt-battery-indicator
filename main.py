@@ -6,8 +6,8 @@ import os
 import subprocess
 import time
 
-gi.require_version('Gtk', '3.0')
-gi.require_version('AppIndicator3', '0.1')
+gi.require_version("Gtk", "3.0")
+gi.require_version("AppIndicator3", "0.1")
 from gi.repository import Gtk, AppIndicator3, GObject
 
 # change the working directory when script is run through command-line
@@ -16,12 +16,13 @@ dirname = os.path.dirname(abspath)
 os.chdir(dirname)
 
 
-class Indicator():
+class Indicator:
     def __init__(self):
-        self.app = 'bt-battery-indicator'
-        iconpath = os.path.abspath('battery.svg')
+        self.app = "bt-battery-indicator"
+        iconpath = os.path.abspath("battery.svg")
         self.indicator = AppIndicator3.Indicator.new(
-            self.app, iconpath, AppIndicator3.IndicatorCategory.OTHER)
+            self.app, iconpath, AppIndicator3.IndicatorCategory.OTHER
+        )
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(self.create_menu())
         # add thread
@@ -29,12 +30,11 @@ class Indicator():
         # dameonize
         self.update.setDaemon(True)
         self.update.start()
-        
 
     def create_menu(self):
         menu = Gtk.Menu()
 
-        device, percent = subprocess.getoutput("./pullpower.sh").split('\n')
+        device, percent = subprocess.getoutput("./pullpower.sh").split("\n")
         # add space padding to deal with repeated devices being recognized
         # as seperate devices because of middle vs no end spacing
         device = " " + device + " "
@@ -43,7 +43,7 @@ class Indicator():
         dev.pop(0)  # remove empty space
         # split by percent
         perc = percent.split("percentage:")
-        perc.pop(0);
+        perc.pop(0)
         perc.pop()  # remove display devices in my case..
 
         keep = OrderedDict((device, dev.index(device)) for device in dev)
@@ -53,7 +53,6 @@ class Indicator():
         for idx in keepIdx:
             model.append(dev[idx])
             battery.append(perc[idx])
-            
 
         # add devices + battery%s
         for num in range(len(model)):
@@ -64,30 +63,31 @@ class Indicator():
         #    self.indicator.set_secondary_activate_target(item_model)
 
         # add a separator between devices and quit button
-        menu_sep = Gtk.SeparatorMenuItem()
-        menu.append(menu_sep)
+        # menu_sep = Gtk.SeparatorMenuItem()
+        # menu.append(menu_sep)
 
         # quit button
-        item_quit1 = Gtk.MenuItem('quit')
-        item_quit1.connect('activate', self.stop)
+        # item_quit1 = Gtk.MenuItem('quit')
+        # item_quit1.connect('activate', self.stop)
 
-        menu.append(item_quit1)
+        # menu.append(item_quit1)
         menu.show_all()
         return menu
 
-    def stop(self, source):
-        Gtk.main_quit()
+        # def stop(self, source):
+        # Gtk.main_quit()
 
     def update_battery_status(self):
-        while True: 
+        while True:
             time.sleep(300)  # updates every 5 minutes
             # apply interface update
             GObject.idle_add(
                 self.indicator.set_menu,
                 self.create_menu(),
-                priority=GObject.PRIORITY_DEFAULT
+                priority=GObject.PRIORITY_DEFAULT,
             )
-    #def update_battery_status(self, widget):
+
+    # def update_battery_status(self, widget):
     #    GObject.idle_add(
     #        self.indicator.set_menu,
     #        self.create_menu(),
