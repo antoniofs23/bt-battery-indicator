@@ -63,8 +63,14 @@ class Indicator:
         #    self.indicator.set_secondary_activate_target(item_model)
 
         # add a separator between devices and quit button
-        # menu_sep = Gtk.SeparatorMenuItem()
-        # menu.append(menu_sep)
+        menu_sep = Gtk.SeparatorMenuItem()
+        menu.append(menu_sep)
+
+        # manual_refresh incase user doesn't want to wait 5min
+        # or wants to check bt-battery of a newly added device
+        item_manual_refresh = Gtk.MenuItem("manual refresh")
+        item_manual_refresh.connect("activate", self.manual_refresh)
+        menu.append(item_manual_refresh)
 
         # quit button
         # item_quit1 = Gtk.MenuItem('quit')
@@ -76,6 +82,13 @@ class Indicator:
 
         # def stop(self, source):
         # Gtk.main_quit()
+
+    def manual_refresh(self, source):
+        GObject.idle_add(
+            self.indicator.set_menu,
+            self.create_menu(),
+            priority=GObject.PRIORITY_DEFAULT,
+        )
 
     def update_battery_status(self):
         while True:
