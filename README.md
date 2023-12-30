@@ -5,6 +5,11 @@ a simple linux panel app that outputs the battery percent of connected bluetooth
 
 ![Screenshot from 2023-12-28 17-20-47](https://github.com/antoniofs23/bt-battery-indicator/assets/39067846/81287b34-f49e-47ef-8335-b8e957e554fb)
 
+> usage:
+> the `manual refresh` bypasses the default 5min refresh -- useful if you just added a new device
+> the `add device` opens up bt setting on GNOME, it can easily be set up to work on your DE of choice by changing line `99` on `main.py`
+
+
 ## Installation
 
 1. clone this repo to your home directory via:
@@ -18,5 +23,3 @@ a simple linux panel app that outputs the battery percent of connected bluetooth
 The app should auto-start on login.
 However, it can also be run through the `bt-battery` terminal command
 
->[!NOTE]
->the  `add device` button is strictly set-up to work on `GNOME` but it can be easily set up to work on your DE of choice by changing line `99` on `main.py`
